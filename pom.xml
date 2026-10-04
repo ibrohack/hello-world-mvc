@@ -170,6 +170,15 @@
                     <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>
+            <!-- "mvn compile exec:java -Dexec.args=<password>" prints the hash of a new password -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.6.4</version>
+                <configuration>
+                    <mainClass>tartanga.dami2.din.helloworldmvc.util.PasswordHasher</mainClass>
+                </configuration>
+            </plugin>
             <!-- "mvn javafx:run" starts the application -->
             <plugin>
                 <groupId>org.openjfx</groupId>
