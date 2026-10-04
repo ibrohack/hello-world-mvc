@@ -139,7 +139,7 @@ has no documentation comment.
 
 `mvn clean package -Pdist` builds `target/hello-world-mvc-1.0.0-win.zip`, which contains:
 
-- `hello-world-mvc.jar`: the application.
+- `hello-world-mvc.jar`: the application, with its Java source files next to the classes.
 - `lib/`: the MySQL driver.
 - `jre/`: a Java runtime created with `jlink` that only has the JDK and JavaFX modules the
   application needs.
