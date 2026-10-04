@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Hello World MVC - Maven project descriptor.
+  Authors: Aritz Navarro, Brayan Romero, Ekaitz Rivero
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>tartanga.dami2.din</groupId>
+    <artifactId>hello-world-mvc</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>Hello World MVC</name>
+    <description>
+        JavaFX application in which users sign in and see their data. It follows a two-layer
+        architecture (user interface and data access) and reads the users from a properties file
+        or a MySQL database, as selected in config.properties.
+    </description>
+
+    <developers>
+        <developer>
+            <name>Aritz Navarro</name>
+        </developer>
+        <developer>
+            <name>Brayan Romero</name>
+        </developer>
+        <developer>
+            <name>Ekaitz Rivero</name>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.release>25</maven.compiler.release>
+
+        <!-- Application entry point -->
+        <app.module>tartanga.dami2.din.helloworldmvc</app.module>
+        <app.mainClass>tartanga.dami2.din.helloworldmvc.App</app.mainClass>
+
+        <!-- Dependency versions -->
+        <javafx.version>25.0.4</javafx.version>
+        <!--
+          Connector/J 9.x is the last line that supports MySQL Server 8.0: version 26.x
+          requires MySQL 8.4 or later, so do not upgrade it while the database is MySQL 8.0.
+        -->
+        <mysql-connector.version>9.7.0</mysql-connector.version>
+        <junit.version>6.1.3</junit.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <!--
+          The driver is only used through the JDBC API (java.sql), so it is not declared in
+          module-info.java: it stays on the class path and JDBC loads it automatically.
+        -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>${mysql-connector.version}</version>
+            <exclusions>
+                <!-- Only needed by the X DevAPI, which this application does not use -->
+                <exclusion>
+                    <groupId>com.google.protobuf</groupId>
+                    <artifactId>protobuf-java</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.5.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.5.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.5.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <!-- Stops the build early with a clear message if the JDK or Maven is too old -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.6.3</version>
+                <executions>
+                    <execution>
+                        <id>enforce-build-environment</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <version>[25,)</version>
+                                    <message>Hello World MVC needs JDK 25 or later: check JAVA_HOME.</message>
+                                </requireJavaVersion>
+                                <requireMavenVersion>
+                                    <version>[3.9,)</version>
+                                    <message>Hello World MVC needs Maven 3.9 or later.</message>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.16.0</version>
+                <configuration>
+                    <showWarnings>true</showWarnings>
+                    <compilerArgs>
+                        <arg>-Xlint:all</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <!-- The tests only use plain Java classes, so they run on the class path -->
+                    <useModulePath>false</useModulePath>
+                </configuration>
+            </plugin>
+            <!-- "mvn javafx:run" starts the application -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>${app.module}/${app.mainClass}</mainClass>
+                    <!-- Use the JDK that runs Maven, not the first "java" found on the PATH -->
+                    <executable>${java.home}/bin/java</executable>
+                    <options>
+                        <!-- JavaFX loads native libraries: allow it without JDK warnings -->
+                        <option>--enable-native-access=javafx.graphics</option>
+                    </options>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

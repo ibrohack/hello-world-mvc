@@ -1,0 +1,32 @@
+# Hello World MVC - files and folders that Git must not track.
+# Authors: Aritz Navarro, Brayan Romero, Ekaitz Rivero
+
+# Maven build output
+target/
+
+# Local configuration with real database credentials.
+# Copy config.properties.example to config.properties and edit the copy.
+/config.properties
+
+# Log files written by the application
+logs/
+*.log
+
+# IDE settings
+.idea/
+*.iml
+.vscode/
+nbproject/
+nb-configuration.xml
+.classpath
+.project
+.settings/
+.factorypath
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Reference documents such as the assignment statement
+/*.pdf

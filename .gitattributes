@@ -1,0 +1,19 @@
+# Hello World MVC - line endings and binary files.
+# Authors: Aritz Navarro, Brayan Romero, Ekaitz Rivero
+
+# Store text files with LF line endings in the repository
+* text=auto
+
+# Shell scripts must keep LF line endings to run on Linux, macOS and Git Bash
+*.sh text eol=lf
+
+# Windows batch files need CRLF line endings
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.ico binary
+*.jar binary
+*.pdf binary
