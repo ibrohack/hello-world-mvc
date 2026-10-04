@@ -1,0 +1,35 @@
+/*
+ * Hello World MVC - stylesheet shared by the sign-in and user data views.
+ * Authors: Aritz Navarro, Brayan Romero, Ekaitz Rivero
+ */
+
+/* Base font size of every window */
+.root {
+    -fx-font-size: 14px;
+}
+
+/* Main heading of a window */
+.title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+/* Explanatory text under the heading */
+.subtitle {
+    -fx-text-fill: #555555;
+}
+
+/* Validation and sign-in error messages */
+.error {
+    -fx-text-fill: #b00020;
+}
+
+/* Names of the fields in the user data window */
+.field-name {
+    -fx-font-weight: bold;
+}
+
+/* Buttons with the same minimum width look tidier side by side */
+.button {
+    -fx-min-width: 90px;
+}
