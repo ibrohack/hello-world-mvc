@@ -8,8 +8,9 @@ import tartanga.dami2.din.helloworldmvc.model.User;
  * Defines the operations of the data access layer for {@link User} objects.
  *
  * <p>The user interface layer only depends on this interface, never on a specific
- * implementation. The implementation used on each run is selected with the
- * {@code dao.implementation} key of {@code config.properties}; see {@link DaoConfig}.
+ * implementation. On each run, {@link DaoFactory} creates the implementation selected
+ * with the {@code dao.implementation} key of {@code config.properties}:
+ * {@link UserDaoDbImpl} or {@link UserDaoFileImpl}.
  *
  * @author Aritz Navarro
  * @author Brayan Romero
