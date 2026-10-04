@@ -1,0 +1,32 @@
+# =============================================================================
+# Hello World MVC - configuration file (EXAMPLE)
+# Authors: Aritz Navarro, Brayan Romero, Ekaitz Rivero
+#
+# How to use it:
+#   1. Copy this file to "config.properties" in the same folder.
+#   2. Set your own values in config.properties.
+# config.properties is ignored by Git because it contains your database
+# credentials: never commit it. Only this example file is tracked.
+#
+# Save the file in UTF-8. In values, a backslash (\) must be written twice (\\),
+# so prefer forward slashes (/) in paths.
+# =============================================================================
+
+# Data access implementation used on each run:
+#   FILE     - users are read from the file set in file.path (no database needed)
+#   DATABASE - users are read from the MySQL database set in db.url
+dao.implementation=FILE
+
+# --- DATABASE implementation (MySQL 8.0) -------------------------------------
+# JDBC URL of the database created by database/hello_world_mvc.sql.
+# allowPublicKeyRetrieval=true avoids the MySQL 8 error "Public Key Retrieval is
+# not allowed" when the connection does not use SSL.
+db.url=jdbc:mysql://localhost:3306/hello_world_mvc?allowPublicKeyRetrieval=true&connectTimeout=5000
+# Account created by database/hello_world_mvc.sql (read-only access).
+db.user=hwmvc_app
+# Password you chose for that account in database/hello_world_mvc.sql.
+db.password=CHANGE_ME
+
+# --- FILE implementation -----------------------------------------------------
+# Path of the users file, relative to the folder of this configuration file.
+file.path=data/users.properties
