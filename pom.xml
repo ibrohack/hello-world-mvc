@@ -170,6 +170,25 @@
                     <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>
+            <!-- "mvn javadoc:javadoc" generates the API documentation in target/reports/apidocs -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.12.0</version>
+                <configuration>
+                    <!-- Private members are documented too, so every attribute and method appears -->
+                    <show>private</show>
+                    <author>true</author>
+                    <version>true</version>
+                    <!-- Any missing comment or HTML error is reported and fails the build -->
+                    <doclint>all</doclint>
+                    <failOnWarnings>true</failOnWarnings>
+                    <overview>${project.basedir}/src/main/javadoc/overview.html</overview>
+                    <doctitle>Hello World MVC ${project.version} API</doctitle>
+                    <windowtitle>Hello World MVC ${project.version} API</windowtitle>
+                    <bottom>Hello World MVC - Aritz Navarro, Brayan Romero, Ekaitz Rivero</bottom>
+                </configuration>
+            </plugin>
             <!-- "mvn compile exec:java -Dexec.args=<password>" prints the hash of a new password -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

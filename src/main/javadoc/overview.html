@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+  Hello World MVC - overview page of the API documentation.
+  Authors: Aritz Navarro, Brayan Romero, Ekaitz Rivero
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hello World MVC</title>
+</head>
+<body>
+<p>Hello World MVC is a JavaFX application in which users sign in and see their data.
+It shows how a professional application is organised in layers, documented and
+packaged.</p>
+
+<h1>Architecture</h1>
+<p>The application follows a two-layer architecture. The user interface layer is made
+of the FXML views and their controllers, and the data access layer (DAO) reads the
+users from a data store. The model is shared by both layers.</p>
+<table class="striped">
+<caption>Elements of the design and the code that implements them</caption>
+<thead>
+<tr><th scope="col">Design element</th><th scope="col">Implementation</th></tr>
+</thead>
+<tbody>
+<tr><td>Sign-in view</td><td>{@code view/LoginView.fxml}</td></tr>
+<tr><td>User data view</td><td>{@code view/UserDataView.fxml}</td></tr>
+<tr><td>Controller</td>
+    <td>{@link tartanga.dami2.din.helloworldmvc/tartanga.dami2.din.helloworldmvc.controller.LoginController} and
+        {@link tartanga.dami2.din.helloworldmvc/tartanga.dami2.din.helloworldmvc.controller.UserDataController}</td></tr>
+<tr><td>Model</td><td>{@link tartanga.dami2.din.helloworldmvc/tartanga.dami2.din.helloworldmvc.model.User}</td></tr>
+<tr><td>Data access interface</td><td>{@link tartanga.dami2.din.helloworldmvc/tartanga.dami2.din.helloworldmvc.dao.UserDao}</td></tr>
+<tr><td>Database implementation</td><td>{@link tartanga.dami2.din.helloworldmvc/tartanga.dami2.din.helloworldmvc.dao.UserDaoDbImpl}</td></tr>
+<tr><td>File implementation</td><td>{@link tartanga.dami2.din.helloworldmvc/tartanga.dami2.din.helloworldmvc.dao.UserDaoFileImpl}</td></tr>
+</tbody>
+</table>
+
+<h1>Selecting the data store</h1>
+<p>On each run, {@link tartanga.dami2.din.helloworldmvc/tartanga.dami2.din.helloworldmvc.dao.DaoFactory} reads the
+{@code config.properties} file through {@link tartanga.dami2.din.helloworldmvc/tartanga.dami2.din.helloworldmvc.dao.DaoConfig}
+and creates the implementation selected with the {@code dao.implementation} key:
+{@code DATABASE} or {@code FILE}. The file is not tracked by Git because it contains the
+database credentials: each developer copies {@code config.properties.example} and sets
+their own values.</p>
+
+<h1>Error handling and logging</h1>
+<p>The data access layer reports problems with checked exceptions
+({@link tartanga.dami2.din.helloworldmvc/tartanga.dami2.din.helloworldmvc.exception.DaoException},
+{@link tartanga.dami2.din.helloworldmvc/tartanga.dami2.din.helloworldmvc.exception.InvalidCredentialsException} and
+{@link tartanga.dami2.din.helloworldmvc/tartanga.dami2.din.helloworldmvc.exception.ConfigurationException}), which the
+controllers turn into messages for the user. The values typed by the user are validated
+before they reach the data access layer, and every class records its activity with
+{@code java.util.logging}.</p>
+
+@author Aritz Navarro
+@author Brayan Romero
+@author Ekaitz Rivero
+@version 1.0.0
+</body>
+</html>
