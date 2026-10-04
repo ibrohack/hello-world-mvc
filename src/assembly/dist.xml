@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Hello World MVC - contents of the distribution zip built by "mvn clean package -Pdist".
+  Authors: Aritz Navarro, Brayan Romero, Ekaitz Rivero
+-->
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.2.0 https://maven.apache.org/xsd/assembly-2.2.0.xsd">
+    <id>dist</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <baseDirectory>${project.artifactId}-${project.version}</baseDirectory>
+
+    <files>
+        <!-- Application -->
+        <file>
+            <source>${project.build.directory}/${project.build.finalName}.jar</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
+        <!-- Launch scripts -->
+        <file>
+            <source>src/dist/hello-world-mvc.sh</source>
+            <outputDirectory>/</outputDirectory>
+            <lineEnding>unix</lineEnding>
+            <fileMode>0755</fileMode>
+        </file>
+        <file>
+            <source>src/dist/hello-world-mvc.bat</source>
+            <outputDirectory>/</outputDirectory>
+            <lineEnding>dos</lineEnding>
+        </file>
+        <!-- Configuration: a ready-to-use copy of the example (FILE mode) and the example itself -->
+        <file>
+            <source>config.properties.example</source>
+            <outputDirectory>/</outputDirectory>
+            <destName>config.properties</destName>
+        </file>
+        <file>
+            <source>config.properties.example</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
+        <file>
+            <source>README.md</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
+    </files>
+
+    <fileSets>
+        <!-- Libraries used by the application: the MySQL driver -->
+        <fileSet>
+            <directory>${project.build.directory}/dist-lib</directory>
+            <outputDirectory>lib</outputDirectory>
+        </fileSet>
+        <!-- Java runtime with the JDK and JavaFX modules; its programs must be executable -->
+        <fileSet>
+            <directory>${project.build.directory}/jre</directory>
+            <outputDirectory>jre</outputDirectory>
+            <excludes>
+                <exclude>bin/**</exclude>
+                <exclude>lib/jspawnhelper</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/jre</directory>
+            <outputDirectory>jre</outputDirectory>
+            <includes>
+                <include>bin/**</include>
+                <include>lib/jspawnhelper</include>
+            </includes>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <!-- Sample users and database script -->
+        <fileSet>
+            <directory>data</directory>
+            <outputDirectory>data</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>database</directory>
+            <outputDirectory>database</outputDirectory>
+        </fileSet>
+        <!-- API documentation -->
+        <fileSet>
+            <directory>${project.build.directory}/reports/apidocs</directory>
+            <outputDirectory>docs/api</outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>
