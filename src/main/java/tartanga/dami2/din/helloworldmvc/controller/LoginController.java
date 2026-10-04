@@ -1,5 +1,6 @@
 package tartanga.dami2.din.helloworldmvc.controller;
 
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -8,6 +9,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -32,7 +34,7 @@ import tartanga.dami2.din.helloworldmvc.util.InputValidator;
  *
  * <p>It checks the format of the login and password typed by the user, asks the data
  * access layer for the matching user in a background task, so that the window does not
- * freeze, and reports the result to the user.
+ * freeze, and opens the user data window when the credentials are right.
  *
  * @author Aritz Navarro
  * @author Brayan Romero
@@ -200,15 +202,28 @@ public class LoginController {
     }
 
     /**
-     * Handles a successful sign-in by greeting the user.
+     * Handles a successful sign-in: opens the user data window and closes the sign-in
+     * window.
      *
      * @param user the signed-in user
      */
     private void handleSignInSuccess(User user) {
         busy.set(false);
         LOGGER.log(Level.INFO, "User {0} signed in", user.getLogin());
-        showAlert(AlertType.INFORMATION, "Hello, " + user.getFirstName() + "!",
-                "You have signed in successfully.");
+        try {
+            FXMLLoader loader = new FXMLLoader(UserDataController.class.getResource(UserDataController.VIEW));
+            Parent root = loader.load();
+            UserDataController controller = loader.getController();
+            controller.setStage(new Stage());
+            controller.setUserDao(userDao);
+            controller.setUser(user);
+            controller.initStage(root);
+            // The user data window is already open, so closing this one does not end the application
+            stage.close();
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "The user data window cannot be opened", e);
+            showAlert(AlertType.ERROR, "The user data window cannot be opened.", e.getMessage());
+        }
     }
 
     /**
