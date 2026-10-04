@@ -11,9 +11,6 @@
  * @author Ekaitz Rivero
  * @version 1.0.0
  */
-// The module is named after the project base package, whose "dami2" component ends in a
-// digit; the compiler warns about that naming style, so the warning is suppressed here.
-@SuppressWarnings("module")
 module tartanga.dami2.din.helloworldmvc {
     // Transitive because the exported App class exposes JavaFX types (Application, Stage)
     requires transitive javafx.controls;

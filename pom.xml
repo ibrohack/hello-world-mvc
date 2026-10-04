@@ -167,7 +167,12 @@
                 <configuration>
                     <showWarnings>true</showWarnings>
                     <compilerArgs>
-                        <arg>-Xlint:all</arg>
+                        <!--
+                          All warnings except "module": the module is named after the project
+                          base package, whose "dami2" component ends in a digit, a naming style
+                          javac warns about.
+                        -->
+                        <arg>-Xlint:all,-module</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
